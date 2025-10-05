@@ -169,7 +169,7 @@ from torch.optim import lr_scheduler  # NEW: Import scheduler
 from sklearn.model_selection import train_test_split
 
 # Load the metadata CSV
-metadata_path = r"C:\Users\Ahana\Desktop\ML\images\HAM10000_metadata.csv"
+metadata_path = r"images\HAM10000_metadata.csv"
 df = pd.read_csv(metadata_path)
 
 # Map image filenames to diagnosis labels
@@ -242,7 +242,7 @@ val_transform = transforms.Compose(
     ]
 )
 
-image_dir = r"C:\Users\Ahana\Desktop\ML\images\images"
+image_dir = r"images\images"
 # NOTE: The initial 'dataset' and 'loader' setup is now technically redundant
 # since you create train/val splits later, but kept for context:
 # dataset = HAM10000Dataset(image_dir=image_dir, label_dict=filename_to_label, transform=train_transform)
@@ -263,7 +263,9 @@ model = model.to(device)
 
 # Load the previously saved weights to continue/resume training
 try:
-    model.load_state_dict(torch.load("skin_disease_resnet18.pth", map_location=device))
+    model.load_state_dict(
+        torch.load("skin_disease_resnet18_best.pth", map_location=device)
+    )
     print("RESUMED: Loaded previous model weights to continue training.")
 except FileNotFoundError:
     print(
